@@ -1,7 +1,7 @@
 import { mock } from '../../mocks';
 import PlaceCard from '../../components/card/card';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import Header from '../../components/widgets/header/header';
+import Footer from '../../components/widgets/footer/footer';
 
 
 const pageMocks = [

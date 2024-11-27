@@ -1,4 +1,4 @@
-import Header from '../../components/header/header';
+import Header from '../../components/widgets/header/header';
 import PlaceCard from '../../components/card/card';
 
 import { PlacesOption, cities } from '../../constant';

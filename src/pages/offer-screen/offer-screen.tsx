@@ -1,4 +1,4 @@
-import Header from '../../components/header/header';
+import Header from '../../components/widgets/header/header';
 import PlaceCard from '../../components/card/card';
 import { PremiumClass, RatingWidget } from '../../components/widgets/widgets';
 import ReviewsListWidget from '../../components/widgets/review';
@@ -7,7 +7,7 @@ import { mock, mockItem, mockComments } from '../../mocks';
 
 const nearestMocks = mock.slice(7, 10);
 
-function GaleryItem({ img }): JSX.Element {
+function GaleryItem({img}: {img: string}): JSX.Element {
   return (
     <div className="offer__image-wrapper" >
       <img className="offer__image" src={img} alt="Photo studio" />
