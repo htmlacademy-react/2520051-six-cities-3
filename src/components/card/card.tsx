@@ -1,4 +1,5 @@
-import { PremiumClass, RatingWidget } from '../widgets/widgets';
+import RatingWidget from '../widgets/rating-widget';
+import PremiumClass from '../widgets/premium-class';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constant';
 
@@ -15,16 +16,15 @@ type PlaceCardItem = {
 
 type PlaceCardProps = {
   cardData: PlaceCardItem;
-  onHover: (cardData?: PlaceCardItem) => void;
-  onBlur: (cardData?: PlaceCardItem) => void;
+  onMouseMove?: (cardId: string | null) => void;
 }
 
-export default function PlaceCard({cardData, onHover, onBlur}: PlaceCardProps): JSX.Element {
+function PlaceCard({cardData, onMouseMove}: PlaceCardProps): JSX.Element {
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={() => onHover()}
-      onMouseLeave={() => onBlur()}
+      onMouseEnter={() => onMouseMove ? onMouseMove(cardData.id) : null}
+      onMouseLeave={() => onMouseMove ? onMouseMove(null) : null}
     >
       {cardData.isPremium && <PremiumClass type='place-card'/>}
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -56,3 +56,5 @@ export default function PlaceCard({cardData, onHover, onBlur}: PlaceCardProps): 
     </article>
   );
 }
+
+export default PlaceCard;

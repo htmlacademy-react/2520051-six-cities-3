@@ -1,62 +1,32 @@
 import Header from '../../components/widgets/header/header';
 import PlaceCard from '../../components/card/card';
-import { PremiumClass, RatingWidget } from '../../components/widgets/widgets';
+import RatingWidget from '../../components/widgets/rating-widget';
+import PremiumClass from '../../components/widgets/premium-class';
 import ReviewsListWidget from '../../components/widgets/review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 
 import { mock, mockItem, mockComments } from '../../mocks';
 import { AuthorizationStatus } from '../../constant';
+import { Helmet } from 'react-helmet-async';
 
 const nearestMocks = mock.slice(7, 10);
-
-function GaleryItem({img}: {img: string}): JSX.Element {
-  return (
-    <div className="offer__image-wrapper" >
-      <img className="offer__image" src={img} alt="Photo studio" />
-    </div>
-  );
-}
-
-type OfferFeaturesProps = {
-  entire: string;
-  bedrooms: number;
-  adults: number;
-}
-
-function OfferFeatures({ entire, bedrooms, adults }: OfferFeaturesProps) {
-  return (
-    <ul className="offer__features">
-      <li className="offer__feature offer__feature--entire">
-        {entire[0].toUpperCase() + entire.substring(1)}
-      </li>
-      <li className="offer__feature offer__feature--bedrooms">
-        {bedrooms} Bedrooms
-      </li>
-      <li className="offer__feature offer__feature--adults">
-        Max {adults} adults
-      </li>
-    </ul>
-  );
-}
-
-function OfferGoods({ item }: { item: string }) {
-  return (
-    <li className="offer__inside-item">
-      {item}
-    </li>
-
-  );
-}
 
 function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>{mockItem.title}</title>
+      </Helmet>
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {mockItem.images.map((img) => <GaleryItem img={img} key={img} />)}
+              {mockItem.images.map((img) => (
+                <div className="offer__image-wrapper" key={img}>
+                  <img className="offer__image" src={img} alt="Photo studio" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
@@ -74,7 +44,19 @@ function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationS
                 </button>
               </div>
               <RatingWidget rating={mockItem.rating} type='offer' showValue />
-              <OfferFeatures entire={mockItem.type} bedrooms={mockItem.bedrooms} adults={mockItem.maxAdults} />
+
+              <ul className="offer__features">
+                <li className="offer__feature offer__feature--entire">
+                  {mockItem.type[0].toUpperCase() + mockItem.type.substring(1)}
+                </li>
+                <li className="offer__feature offer__feature--bedrooms">
+                  {mockItem.bedrooms} Bedrooms
+                </li>
+                <li className="offer__feature offer__feature--adults">
+                  Max {mockItem.maxAdults} adults
+                </li>
+              </ul>
+
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{mockItem.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
@@ -82,7 +64,11 @@ function OfferScreen({authorizationStatus}: {authorizationStatus: AuthorizationS
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {mockItem.goods.map((item) => <OfferGoods item={item} key={item} />)}
+                  {mockItem.goods.map((item) => (
+                    <li className="offer__inside-item" key={item}>
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="offer__host">

@@ -1,8 +1,13 @@
 import Header from '../../components/widgets/header/header';
+import { Helmet } from 'react-helmet-async';
 
 function LoginScreen() {
   return (
     <div className="page page--gray page--login">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
+
       <Header navbar={false}/>
 
       <main className="page__main page__main--login">

@@ -1,4 +1,4 @@
-import { RatingWidget } from './widgets';
+import RatingWidget from './rating-widget';
 import { getDatetimeFormat } from '../../utils';
 import {DateFormat} from '../../transfers';
 
