@@ -6,4 +6,3 @@ export const getAuthorizationStatus = (state: State): AuthorizationStatus => sta
 export const getAuthCheckedStatus = (state: State): boolean => state[NameSpace.User].authorizationStatus !== AuthorizationStatus.Unknown;
 export const getUser = (state: State): User | null => state[NameSpace.User].user;
 export const getAuthError = (state: State): string | null => state[NameSpace.User].error;
-

@@ -44,7 +44,7 @@ export const mainData = createSlice({
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
-        state.countFavorites = state.favorites.length;
+        state.countFavorites = action.payload.length;
         state.isDataLoading = false;
       })
       .addCase(fetchFavoritesAction.pending, (state) => {

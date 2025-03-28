@@ -14,16 +14,6 @@ import { sortByDateDescending } from '../utils';
 import { resetFavorites } from './main-data/main-data';
 
 
-// export const clearErrorAction = createAsyncThunk(
-//   'game/clearError',
-//   () => {
-//     setTimeout(
-//       () => store.dispatch(setError(null)),
-//       TIMEOUT_SHOW_ERROR,
-//     );
-//   },
-// );
-
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
   state: State;

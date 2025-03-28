@@ -9,9 +9,9 @@ export const endPoints = {
   NEARBY: '/offers/:offerId/nearby',
   FAVORITE: '/favorite',
   FAVORITE_STATUS: '/favorite/:offerId/:status',
-  COMMENTS: '/comments/:offerId', // get post
-  LOGIN: '/login', // get post
-  LOGOUT: '/logout', // delete
+  COMMENTS: '/comments/:offerId',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
 };
 
 export const URL_MARKER_DEFAULT = '../public/img/pin.svg';
