@@ -12,9 +12,10 @@ export type UserProcess = {
 
 export type MainData = {
   offers: Offers;
-  favorites: Offers;
+  favorites: Record<string, Offers>;
   countFavorites: number;
   isDataLoading: boolean;
+  isFavoritesStatusLoading: boolean;
   error: string | null;
   city: City;
   sorting: string;

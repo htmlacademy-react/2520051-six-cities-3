@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { Action } from 'redux';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
-import { endPoints } from '../constant';
+import { endPoints, initFavorites } from '../constant';
 import {
   checkAuthAction,
   fetchFavoritesAction,
@@ -28,7 +28,7 @@ describe('Async actions', () => {
     store = mockStoreCreator({
       MAIN: {
         offers: [],
-        favorites: [],
+        favorites: initFavorites,
         countFavorites: 0,
       },
       OFFER: {

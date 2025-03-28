@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import { Offer } from './types/main';
+import { Offer, Offers } from './types/main';
 import { PlacesOption } from './transfers';
 import { Comment } from './types/offer';
-import { cities } from './constant';
+import { cities, initFavorites } from './constant';
 dayjs.extend(duration);
 
 
@@ -24,6 +24,14 @@ export const getSortedOffers = ((data: Offer[], sortingType: string) => {
       return (data);
   }
 });
+
+export const groupFavoritesByCity = (offers: Offers): Record<string, Offers> => {
+  const favorites: Record<string, Offers> = { ...initFavorites };
+  cities.forEach((city) => {
+    favorites[city.name] = offers.filter((offer) => offer.city.name === city.name);
+  });
+  return favorites;
+};
 
 export const getRandomCity = () => (cities[Math.floor(Math.random() * cities.length)]);
 

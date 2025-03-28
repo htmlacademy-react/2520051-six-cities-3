@@ -5,6 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { PlacesOption } from '../transfers';
+import { groupFavoritesByCity } from '../utils';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
@@ -84,9 +85,10 @@ export const mockState = {
     city: cities[0],
     sorting: PlacesOption.POPULAR,
     offers: mockOffers,
-    favorites: mockFavorites,
+    favorites: groupFavoritesByCity(mockFavorites),
     countFavorites: mockFavorites.length,
     isDataLoading: false,
+    isFavoritesStatusLoading: false,
     error: null,
   },
   [NameSpace.Offer]: {

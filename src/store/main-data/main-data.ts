@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { cities, NameSpace } from '../../constant';
+import { cities, initFavorites, NameSpace } from '../../constant';
 import { fetchFavoritesAction, fetchFavoritesStatusAction, fetchOffersAction } from '../api-actions';
 import { MainData } from '../../types/state';
 import { PlacesOption } from '../../transfers';
+import { groupFavoritesByCity } from '../../utils';
 
 const initialState: MainData = {
   city: cities[0],
   sorting: PlacesOption.POPULAR,
   offers: [],
-  favorites: [],
+  favorites: initFavorites,
   countFavorites: 0,
   isDataLoading: false,
+  isFavoritesStatusLoading: false,
   error: null,
 };
 
@@ -25,7 +27,7 @@ export const mainData = createSlice({
       state.sorting = action.payload;
     },
     resetFavorites(state) {
-      state.favorites = [];
+      state.favorites = initFavorites;
       state.countFavorites = 0;
     },
   },
@@ -43,7 +45,7 @@ export const mainData = createSlice({
         state.error = 'Ошибка загрузки';
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
-        state.favorites = action.payload;
+        state.favorites = groupFavoritesByCity(action.payload);
         state.countFavorites = action.payload.length;
         state.isDataLoading = false;
       })
@@ -55,21 +57,30 @@ export const mainData = createSlice({
         state.error = 'Ошибка загрузки';
       })
       .addCase(fetchFavoritesStatusAction.fulfilled, (state, action) => {
-        const indexOffers = state.offers.findIndex((offer) => offer.id === action.payload.id);
-        if(indexOffers !== -1){
-          state.offers[indexOffers].isFavorite = action.payload.isFavorite;
-        }
-        if (action.payload.isFavorite) {
-          state.favorites.push(action.payload);
+        const updatedOffer = action.payload;
+        const indexOffer = state.offers.findIndex(
+          (offer) => offer.id === updatedOffer.id,
+        );
+        state.offers[indexOffer].isFavorite = updatedOffer.isFavorite;
+        if (updatedOffer.isFavorite === true) {
+          state.favorites[updatedOffer.city.name].push(updatedOffer);
           state.countFavorites++;
-        }else{
-          const index = state.favorites.findIndex((favorite) => favorite.id === action.payload.id);
+        } else {
+          const index = state.favorites[updatedOffer.city.name].findIndex(
+            (offer) => offer.id === updatedOffer.id,
+          );
           if (index !== -1) {
-            state.favorites.splice(index, 1);
+            state.favorites[updatedOffer.city.name].splice(index, 1);
+            state.countFavorites--;
           }
-          state.countFavorites--;
         }
-
+        state.isFavoritesStatusLoading = false;
+      })
+      .addCase(fetchFavoritesStatusAction.pending, (state) => {
+        state.isFavoritesStatusLoading = true;
+      })
+      .addCase(fetchFavoritesStatusAction.rejected, (state) => {
+        state.isFavoritesStatusLoading = false;
       });
   }
 });

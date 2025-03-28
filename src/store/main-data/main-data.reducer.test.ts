@@ -1,5 +1,6 @@
-import { cities } from '../../constant';
+import { cities, initFavorites } from '../../constant';
 import { PlacesOption } from '../../transfers';
+import { groupFavoritesByCity } from '../../utils';
 import { generateMockOffer } from '../mock';
 import { mainData, resetFavorites, setCity, setSorting } from './main-data';
 
@@ -11,9 +12,10 @@ describe('MainData Slice', () => {
       city: cities[0],
       sorting: PlacesOption.POPULAR,
       offers: [],
-      favorites: [],
+      favorites: initFavorites,
       countFavorites: 0,
       isDataLoading: false,
+      isFavoritesStatusLoading: false,
       error: null,
     };
 
@@ -27,9 +29,10 @@ describe('MainData Slice', () => {
       city: cities[0],
       sorting: PlacesOption.POPULAR,
       offers: [],
-      favorites: [],
+      favorites: initFavorites,
       countFavorites: 0,
       isDataLoading: false,
+      isFavoritesStatusLoading: false,
       error: null,
     };
 
@@ -41,23 +44,26 @@ describe('MainData Slice', () => {
   it('should reset favorites with "resetFavorites" action', () => {
     const mockFavorites = Array.from({ length: 7 }, generateMockOffer)
       .filter((offer) => offer.isFavorite);
+    const groupedMockFavorites = groupFavoritesByCity(mockFavorites);
 
     const initialState = {
       city: cities[0],
       sorting: PlacesOption.POPULAR,
       offers: [],
-      favorites: mockFavorites,
+      favorites: groupedMockFavorites,
       countFavorites: mockFavorites.length,
       isDataLoading: false,
+      isFavoritesStatusLoading: false,
       error: null,
     };
     const expectedState = {
       city: cities[0],
       sorting: PlacesOption.POPULAR,
       offers: [],
-      favorites: [],
+      favorites: initFavorites,
       countFavorites: 0,
       isDataLoading: false,
+      isFavoritesStatusLoading: false,
       error: null,
     };
 
@@ -71,9 +77,10 @@ describe('MainData Slice', () => {
       city: cities[0],
       sorting: PlacesOption.POPULAR,
       offers: [],
-      favorites: [],
+      favorites: initFavorites,
       countFavorites: 0,
       isDataLoading: false,
+      isFavoritesStatusLoading: false,
       error: null,
     };
 
@@ -87,9 +94,10 @@ describe('MainData Slice', () => {
       city: cities[0],
       sorting: PlacesOption.POPULAR,
       offers: [],
-      favorites: [],
+      favorites: initFavorites,
       countFavorites: 0,
       isDataLoading: false,
+      isFavoritesStatusLoading: false,
       error: null,
     };
 

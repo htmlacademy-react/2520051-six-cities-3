@@ -69,6 +69,15 @@ export const cities = [
   },
 ];
 
+export const initFavorites = {
+  'Paris': [],
+  'Cologne': [],
+  'Brussels': [],
+  'Amsterdam': [],
+  'Hamburg': [],
+  'Dusseldorf': [],
+};
+
 export enum AppRoute {
   Login = '/login',
   Main = '/',

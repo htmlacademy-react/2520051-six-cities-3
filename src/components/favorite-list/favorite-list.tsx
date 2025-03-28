@@ -6,25 +6,26 @@ import { getFilterFavoriteOffers } from '../../store/main-data/selectors';
 
 function FavoriteList(): JSX.Element {
   const favorites = useAppSelector(getFilterFavoriteOffers);
-
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {favorites.map((favoriteItem) => (
-          favoriteItem.offers.length) ? (
-            <li className="favorites__locations-items" key={favoriteItem.city}>
-              <div className="favorites__locations locations locations--current">
-                <div className="locations__item">
-                  <Link to="#" className="locations__item-link">
-                    <span>{favoriteItem.city}</span>
-                  </Link>
+        {Object.entries(favorites).map(([city, citiFavorites]) => {
+          if (citiFavorites.length){
+            return (
+              <li className="favorites__locations-items" key={city}>
+                <div className="favorites__locations locations locations--current">
+                  <div className="locations__item">
+                    <Link to="#" className="locations__item-link">
+                      <span>{city}</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <CardList offers={favoriteItem.offers} typeContent='favorites'/>
-            </li>
-          ) : null
-        )}
+                <CardList offers={citiFavorites} typeContent='favorites'/>
+              </li>
+            );
+          }
+        })}
       </ul>
     </section>
   );

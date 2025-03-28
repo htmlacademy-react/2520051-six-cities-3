@@ -7,6 +7,7 @@ import { fetchFavoritesStatusAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { memo, useCallback } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getFavoritesStatusLoadingStatus } from '../../store/main-data/selectors';
 
 type PlaceCardItem = {
   id: string;
@@ -28,16 +29,20 @@ type PlaceCardProps = {
 function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isFavoritesStatusLoading = useAppSelector(getFavoritesStatusLoadingStatus);
+
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const handleFavoriteClick = useCallback(() => {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       navigate(AppRoute.Login);
       return;
     }
+    if (isFavoritesStatusLoading) {
+      return;
+    }
     dispatch(fetchFavoritesStatusAction({offerId: cardData.id,
       isFavorite: !(cardData.isFavorite)}));
-    cardData.isFavorite = true;
-  }, [authorizationStatus, navigate, dispatch, cardData]);
+  }, [authorizationStatus, navigate, dispatch, cardData, isFavoritesStatusLoading]);
   return (
     <article
       className={classNames(
@@ -78,6 +83,7 @@ function PlaceCard({ cardData, onMouseMove, type = 'vertical' }: PlaceCardProps)
             className={`place-card__bookmark-button button ${cardData.isFavorite ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
             onClick={handleFavoriteClick}
+            disabled={isFavoritesStatusLoading}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
