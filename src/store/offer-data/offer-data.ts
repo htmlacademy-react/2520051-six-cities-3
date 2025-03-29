@@ -27,7 +27,7 @@ export const offerData = createSlice({
         state.isDataLoading = true;
       })
       .addCase(fetchOfferAction.rejected, (state) => {
-        state.error = 'Ошибка загрузки'; //добавить rejectWithValue в fetchOfferAction
+        state.error = 'Ошибка загрузки';
         state.isDataLoading = false;
       })
       .addCase(fetchFavoritesStatusAction.fulfilled, (state, action) => {
