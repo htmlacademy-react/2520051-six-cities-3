@@ -40,7 +40,7 @@ describe('commentsData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set city with "setReviewComment" action', () => {
+  it('should set comment with "setReviewComment" action', () => {
     const initialState = {
       comments: [],
       countComments: 0,
@@ -59,7 +59,7 @@ describe('commentsData Slice', () => {
     expect(result.review.comment).toEqual(expectedReviewComment);
   });
 
-  it('should set city with "setReviewRaiting" action', () => {
+  it('should set raiting with "setReviewRaiting" action', () => {
     const initialState = {
       comments: [],
       countComments: 0,

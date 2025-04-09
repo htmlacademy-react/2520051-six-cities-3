@@ -15,7 +15,6 @@ function NotFoundScreen(): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites favorites--empty">
             <h1 className="visually-hidden">Favorites (empty)</h1>
-            {/* чета ннада заменить в стилях, изображение */}
             <div className="favorites__status-wrapper">
               <b className="favorites__status">404 Not found</b>
               <p className="favorites__status-description">Head back to the
